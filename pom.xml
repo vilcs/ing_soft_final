@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>bo.edu.ucb.sis</groupId>
 	<artifactId>piratebay</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<name>piratebay</name>
 	<description>Proyecto backend para la plataforma PirateBay</description>
 

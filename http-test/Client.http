@@ -13,7 +13,7 @@ Accept: application/json
 
 ### Inserción incorrecta de un usuario
 
-POST http://localhost:8008/api/v1/clients
+POST http://localhost:8030/api/v1/clients
 Content-Type: application/json
 Accept: application/json
 
@@ -24,7 +24,7 @@ Accept: application/json
 
 ### Probamos listar todos los clientes
 
-GET http://localhost:8008/api/v1/clients
+GET http://piratebay.bo:80/api/v1/clients
 Accept: application/json
 
 
