@@ -6,16 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/security")
+@CrossOrigin(origins = "*")
 public class SecurityController {
 
     private SecurityBl securityBl;
@@ -28,12 +26,12 @@ public class SecurityController {
     @RequestMapping(value = "login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,  consumes = MediaType.APPLICATION_JSON_VALUE )
     public ResponseEntity<Map<String, Object>> authenticate(@RequestBody CredentialModel credentialsModel) {
 
-        Integer userId = securityBl.authenticate(credentialsModel.getUsername(), credentialsModel.getPassword());
+        String jwt = securityBl.authenticate(credentialsModel.getUsername(), credentialsModel.getPassword());
 
-        if( userId != null ) {
+        if( jwt != null ) {
             Map <String, Object> response = new HashMap();
             response.put("message", "Authentication OK");
-            response.put("userId", userId);
+            response.put("token", jwt);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             Map <String, Object> response = new HashMap();
