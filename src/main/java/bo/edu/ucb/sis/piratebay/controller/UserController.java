@@ -40,12 +40,15 @@ public class UserController {
         String idUsuario = decodedJWT.getSubject();
         System.out.println("USUARIO: " + idUsuario);
 
-        // El siguiente código valida si el token es bueno
+        if(!"AUTHN".equals(decodedJWT.getClaim("type").asString()) ) {
+            throw new RuntimeException("El token proporcionado no es un token de Autenthication");
+        }
+        // El siguiente código valida si el token es bueno y ademas es un token de authentication
+
         Algorithm algorithm = Algorithm.HMAC256(secretJwt);
         JWTVerifier verifier = JWT.require(algorithm)
                 .withIssuer("PirateBay")
                 .build();
-
         verifier.verify(tokenJwT);
 
         return new ResponseEntity<>( this.userBl.findAllActives(), HttpStatus.OK);

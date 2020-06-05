@@ -1,5 +1,5 @@
 GET http://localhost:8008/api/v1/user/
-Authorization: bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaXNzIjoiUGlyYXRlQmF5IiwiZXhwIjoxNTkxNTIyOTM0fQ.EJvOQowbPa8hSoWKb88RSARB3TGpyGJEovkMY6kmES0
+Authorization: bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaXNzIjoiUGlyYXRlQmF5IiwidHlwZSI6IkFVVEhOIiwiZXhwIjoxNTkxMzE4OTM0fQ.ACmjr1V15ILl9cWlfzq28MwTe-c0JWiSOM-bAxX2LIg
 Accept: application/json
 
 ###

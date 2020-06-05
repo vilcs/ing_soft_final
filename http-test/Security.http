@@ -8,3 +8,10 @@ Accept: application/json
 }
 
 ###
+POST http://localhost:8008/api/v1/security/refresh
+Content-Type: application/json
+Accept: application/json
+
+{
+  "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaXNzIjoiUGlyYXRlQmF5IiwidHlwZSI6IlJFRlJFU0giLCJleHAiOjE1OTEzMTg5NzV9.flGFfarUQf9Eyq06br3MrOJRQidE3ssdXYxjWyd_3BI"
+}
