@@ -18,6 +18,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -50,8 +51,8 @@ public class SecurityBl {
                 .toString(); // TODO Repetir el algoritmo de hash N veces
         Integer userId = userDao.findUserIdByUsernameAndPassword(username, sha256hex);
         if (userId != null ) {
-            result.put("authentication", generateJWT(userId, 2, "AUTHN"));
-            result.put("refresh", generateJWT(userId, 6, "REFRESH"));
+            result.put("authentication", generateJWT(userId, 2, "AUTHN", userDao.findAllFeatureCodeByUserId(userId)));
+            result.put("refresh", generateJWT(userId, 6, "REFRESH", null));
             return result;
         } else {
             return null;
@@ -77,23 +78,35 @@ public class SecurityBl {
 
 
         Map<String, String> result = new HashMap<>();
-        result.put("authentication", generateJWT(Integer.parseInt(idUsuario), 2, "AUTHN"));
-        result.put("refresh", generateJWT(Integer.parseInt(idUsuario), 6, "REFRESH"));
+        Integer userIdAsInt = Integer.parseInt(idUsuario);
+        result.put("authentication", generateJWT(userIdAsInt, 2, "AUTHN", userDao.findAllFeatureCodeByUserId(userIdAsInt)));
+        result.put("refresh", generateJWT(Integer.parseInt(idUsuario), 6, "REFRESH", null));
         return result;
 
     }
 
-    private String generateJWT(Integer userId, int minutes, String type) {
+    private String generateJWT(Integer userId, int minutes, String type, List<String> features) {
         LocalDateTime expiresAt = LocalDateTime.now(ZoneId.systemDefault()).plusMinutes(minutes);
         String token = null;
         try {
             Algorithm algorithm = Algorithm.HMAC256(secretJwt);
-            token = JWT.create()
-                    .withIssuer("PirateBay")
-                    .withClaim("type", type)
-                    .withSubject(userId.toString())
-                    .withExpiresAt(Date.from(expiresAt.atZone(ZoneId.systemDefault()).toInstant())) // TODO corregir fecha
-                    .sign(algorithm);
+            if (features != null) {
+                token = JWT.create()
+                        .withIssuer("PirateBay")
+                        .withClaim("type", type)
+                        .withArrayClaim("features", features.toArray(new String[0]))
+                        .withSubject(userId.toString())
+                        .withExpiresAt(Date.from(expiresAt.atZone(ZoneId.systemDefault()).toInstant()))
+                        .sign(algorithm);
+            } else {
+                token = JWT.create()
+                        .withIssuer("PirateBay")
+                        .withClaim("type", type)
+                        .withSubject(userId.toString())
+                        .withExpiresAt(Date.from(expiresAt.atZone(ZoneId.systemDefault()).toInstant()))
+                        .sign(algorithm);
+            }
+
         } catch (JWTCreationException ex){
             throw new RuntimeException(ex);
         }
