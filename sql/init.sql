@@ -64,3 +64,84 @@ INSERT INTO user_role ( user_id, role_id, status, tx_id, tx_username, tx_host, t
 VALUES (2, 1, 1,  1, 'admin', 'localhost', now());
 
 
+
+-- INSERT DE PROVIDER
+
+INSERT INTO provider (provider_name, cat_country, status, tx_id, tx_username, tx_host, tx_date)
+VALUES ('Proveedor 1','Chile',1, 1, 'admin', 'localhost', now());
+
+-- INSERT DE WAREHOUSE
+
+INSERT INTO warehouse (warehouse_name, warehouse_address, latitude, longitude, status, tx_id, tx_username, tx_host, tx_date)
+VALUES ('Almacen 1','Obrajes calle 10',-16.526716, -68.106790,1, 1, 'admin', 'localhost', now());
+
+-- INSERT DE PERSONA/CLIENTE
+
+INSERT INTO person(first_name, first_surname, document_id, status, tx_id, tx_username, tx_host, tx_date)
+VALUES ('Miguel','Vilca','5972726 L.P.',1,1, 'admin', 'localhost', now());
+INSERT INTO customer(user_id, person_id, status, tx_id, tx_username, tx_host, tx_date)
+VALUES (1,1,1,1, 'admin', 'localhost', now());
+
+INSERT INTO person(first_name, first_surname, document_id, status, tx_id, tx_username, tx_host, tx_date)
+VALUES ('Andres','Morales','7865329 L.P.',1,1, 'admin', 'localhost', now());
+INSERT INTO "user"(username, password, email, phone_number, cat_user_status, status, tx_id, tx_username, tx_host, tx_date)
+VALUES  ('amorales', '12300', 'amorales@gmail.com', '12459385','ACTIVE', 1, 1, 'root', '127.0.0.1',now());
+INSERT INTO customer(user_id, person_id, status, tx_id, tx_username, tx_host, tx_date)
+VALUES (3,2,1,1, 'admin', 'localhost', now());
+
+INSERT INTO person(first_name, first_surname, document_id, status, tx_id, tx_username, tx_host, tx_date)
+VALUES ('Vania','Vera','1298635 L.P.',1,1, 'admin', 'localhost', now());
+INSERT INTO "user"(username, password, email, phone_number, cat_user_status, status, tx_id, tx_username, tx_host, tx_date)
+VALUES  ('vvera', '1999', 'vvera@gmail.com', '78754896','ACTIVE', 1, 1, 'root', '127.0.0.1',now());
+INSERT INTO customer(user_id, person_id, status, tx_id, tx_username, tx_host, tx_date)
+VALUES (4,3,1,1, 'admin', 'localhost', now());
+
+------------------- INSERT DE ORDENES
+
+-- users: 1= mvilca, 2=jperez, 3=amorales, 4=vvera
+
+-- status: 0=eliminado,1=pagado,2=preparado,3=despachado,4=entregado
+
+-- pagadas
+INSERT INTO "order"(provider_id, warehouse_id, user_id, date, status, tx_id, tx_username, tx_host, tx_date)
+VALUES (1,1,1,'2020-05-10',1,1, 'admin', 'localhost', now());
+
+INSERT INTO "order"(provider_id, warehouse_id, user_id, date, status, tx_id, tx_username, tx_host, tx_date)
+VALUES (1,1,2,'2020-05-11',1,1, 'admin', 'localhost', now());
+
+INSERT INTO "order"(provider_id, warehouse_id, user_id, date, status, tx_id, tx_username, tx_host, tx_date)
+VALUES (1,1,3,'2020-05-01',1,1, 'admin', 'localhost', now());
+
+-- preparadas
+INSERT INTO "order"(provider_id, warehouse_id, user_id, date, status, tx_id, tx_username, tx_host, tx_date)
+VALUES (1,1,1,'2020-05-10',2,1, 'admin', 'localhost', now());
+
+INSERT INTO "order"(provider_id, warehouse_id, user_id, date, status, tx_id, tx_username, tx_host, tx_date)
+VALUES (1,1,3,'2020-04-15',2,1, 'admin', 'localhost', now());
+
+INSERT INTO "order"(provider_id, warehouse_id, user_id, date, status, tx_id, tx_username, tx_host, tx_date)
+VALUES (1,1,4,'2020-04-09',2,1, 'admin', 'localhost', now());
+
+-- despachadas
+INSERT INTO "order"(provider_id, warehouse_id, user_id, date, status, tx_id, tx_username, tx_host, tx_date)
+VALUES (1,1,1,'2020-05-10',3,1, 'admin', 'localhost', now());
+
+INSERT INTO "order"(provider_id, warehouse_id, user_id, date, status, tx_id, tx_username, tx_host, tx_date)
+VALUES (1,1,4,'2020-04-05',3,1, 'admin', 'localhost', now());
+-- entregadas
+INSERT INTO "order"(provider_id, warehouse_id, user_id, date, status, tx_id, tx_username, tx_host, tx_date)
+VALUES (1,1,1,'2020-05-10',4,1, 'admin', 'localhost', now());
+
+
+
+
+
+SELECT o.order_id, o.date, p.first_name, p.first_surname, p.address
+FROM "order" as o, "user" as u, customer as  c, person as p
+WHERE o.user_id = u.user_id
+                AND u.user_id = c.user_id
+                AND c.person_id = p.person_id
+                AND o.status = 1;
+
+
+SELECT * FROM "order";

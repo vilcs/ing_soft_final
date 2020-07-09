@@ -1,7 +1,9 @@
 package bo.edu.ucb.sis.piratebay.controller;
 
-import bo.edu.ucb.sis.piratebay.bl.UserBl;
-import bo.edu.ucb.sis.piratebay.model.UserModel;
+import bo.edu.ucb.sis.piratebay.bl.OrderBl;
+import bo.edu.ucb.sis.piratebay.model.OrderModel;
+import bo.edu.ucb.sis.piratebay.model.OrderModel.*;
+import bo.edu.ucb.sis.piratebay.model.PayedOrderModel;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -16,23 +18,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/order")
 @CrossOrigin(origins = "*")
-public class UserController {
-    private UserBl userBl;
+public class OrderController {
+    private OrderBl orderBl;
 
     @Value("${piratebay.security.secretJwt}")
     private String secretJwt;
 
     @Autowired
-    public UserController(UserBl userBl) {
-        this.userBl = userBl;
-    }
+    public OrderController(OrderBl orderBl) { this.orderBl = orderBl; }
 
     @RequestMapping(
+            value = "/payed",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<UserModel>> findAllActives(@RequestHeader("Authorization") String authorization) { // bearer asdasdasdasd
+    public ResponseEntity<List<PayedModel>> findAllPayed(@RequestHeader("Authorization") String authorization) { // bearer asdasdasdasd
 
         // Lo unico que estamos haciendo es decodificar el token.
         String tokenJwT = authorization.substring(7);
@@ -52,7 +53,7 @@ public class UserController {
                 .build();
         verifier.verify(tokenJwT);
 
-        return new ResponseEntity<>( this.userBl.findAllActives(), HttpStatus.OK);
+        return new ResponseEntity<>( this.orderBl.findAllPayed(), HttpStatus.OK);
     }
 
 }

@@ -32,7 +32,11 @@ public class SecurityController {
         this.securityBl = securityBl;
     }
 
-    @RequestMapping(value = "login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,  consumes = MediaType.APPLICATION_JSON_VALUE )
+    @RequestMapping(
+            value = "login",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE )
     public ResponseEntity<Map<String, Object>> authenticate(@RequestBody CredentialModel credentialsModel) {
 
         Map<String, String> tokens = securityBl.authenticate(credentialsModel.getUsername(), credentialsModel.getPassword());
