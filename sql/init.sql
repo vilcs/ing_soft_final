@@ -134,14 +134,21 @@ VALUES (1,1,1,'2020-05-10',4,1, 'admin', 'localhost', now());
 
 
 
+SELECT o.order_id, DATE(o.date), CONCAT(p.first_name,' ',p.first_surname) as customer, o.date_courier_rec, o.date_cust_rec
+FROM "order" as o, "user" as u, customer as  c, person as p
+WHERE o.user_id = u.user_id
+  AND u.user_id = c.user_id
+  AND c.person_id = p.person_id
+  AND o.status = 4;
 
 
-SELECT o.order_id, o.date, p.first_name, p.first_surname, p.address
+
+SELECT o.order_id, o.date, p.first_name, p.first_surname, o.date_courier_rec, o.date_cust_rec
 FROM "order" as o, "user" as u, customer as  c, person as p
 WHERE o.user_id = u.user_id
                 AND u.user_id = c.user_id
                 AND c.person_id = p.person_id
-                AND o.status = 1;
+                AND o.status = 4;
 
 
 SELECT * FROM "order";

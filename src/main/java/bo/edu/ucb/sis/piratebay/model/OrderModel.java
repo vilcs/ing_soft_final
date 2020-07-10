@@ -81,7 +81,7 @@ public class OrderModel {
         }
     }
 
-    class ReadyModel extends OrderModel{
+    public static class ReadyModel extends OrderModel{
         private String requestDate;
 
         public ReadyModel(String requestDate) {
@@ -104,15 +104,15 @@ public class OrderModel {
         @Override
         public String toString() {
             return "ReadyModel{" +
-                    "orderId=" + orderId +
-                    ", date='" + date + '\'' +
-                    ", customer='" + customer + '\'' +
+                    "orderId=" + getOrderId() +
+                    ", date='" + getDate() + '\'' +
+                    ", customer='" + getCustomer() + '\'' +
                     ", requestDate='" + requestDate + '\'' +
                     '}';
         }
     }
 
-    class DispatchedModel extends OrderModel {
+    public static class DispatchedModel extends OrderModel {
         private String courierRecDate;
 
         public DispatchedModel(String courierRecDate) {
@@ -135,15 +135,15 @@ public class OrderModel {
         @Override
         public String toString() {
             return "DispatchedModel{" +
-                    "orderId=" + orderId +
-                    ", date='" + date + '\'' +
-                    ", customer='" + customer + '\'' +
+                    "orderId=" + getOrderId() +
+                    ", date='" + getDate() + '\'' +
+                    ", customer='" + getCustomer() + '\'' +
                     ", courierRecDate='" + courierRecDate + '\'' +
                     '}';
         }
     }
 
-    class DeliveredModel extends OrderModel {
+    public static class DeliveredModel extends OrderModel {
         private String courierRecDate;
         private String customerRecDate;
 
@@ -173,9 +173,9 @@ public class OrderModel {
         @Override
         public String toString() {
             return "DeliveredModel{" +
-                    "orderId=" + orderId +
-                    ", date='" + date + '\'' +
-                    ", customer='" + customer + '\'' +
+                    "orderId=" + getOrderId() +
+                    ", date='" + getDate() + '\'' +
+                    ", customer='" + getCustomer() + '\'' +
                     ", courierRecDate='" + courierRecDate + '\'' +
                     ", customerRecDate='" + customerRecDate + '\'' +
                     '}';

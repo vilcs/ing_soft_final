@@ -20,4 +20,13 @@ public class OrderBl {
     public List<PayedModel> findAllPayed() {
         return this.orderDao.findAllPayed();
     }
+    public List<ReadyModel> findAllReady() {
+        return this.orderDao.findAllReady();
+    }
+    public List<DispatchedModel> findAllDispatched() {
+        return this.orderDao.findAllDispatched();
+    }
+    public List<DeliveredModel> findAllDelivered() {
+        return this.orderDao.findAllDelivered();
+    }
 }
